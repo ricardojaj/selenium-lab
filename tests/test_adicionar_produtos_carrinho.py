@@ -2,35 +2,21 @@ import time
 import pytest
 from selenium.webdriver.common.by import By
 import conftest
+from pages.login_page import LoginPage
+from pages.carrinho_page import CarrinhoPage
 
 
 @pytest.mark.usefixtures("setup_teardown")
 class Test_adc_produtos:
+
     def test_adc_produtos_carrinho(self):
         browser = conftest.browser;
-        username = browser.find_element(By.XPATH, "//*[@id='user-name']");
-        username.send_keys("standard_user");
+        login_page = LoginPage();
+        login_page.fazer_login("standard_user", "secret_sauce");
 
-        password = browser.find_element(By.XPATH, "//*[@id= 'password']");
-        password.send_keys("secret_sauce");
-
-        btn_login = browser.find_element(By.XPATH, "//*[@id= 'login-button']");
-        btn_login.click();
-
-        #adc produto 1
-        btn_add_product = browser.find_element(By.XPATH, "//*[@id= 'add-to-cart-sauce-labs-bike-light']");
-        btn_add_product.click();
-
-        #Acessando Carrinho
-        browser.find_element(By.XPATH, "//*[@class = 'shopping_cart_link']").click();
-
-        #Voltando para tela de produtos
-        browser.find_element(By.ID, "continue-shopping").click();
-
-        #adc produto 2
-        browser.find_element(By.XPATH, "//*[@id= 'add-to-cart-sauce-labs-onesie']").click();
-
-        #Acessando Carrinho
-        browser.find_element(By.XPATH, "//*[@class = 'shopping_cart_link']").click();
+        carrinho_page = CarrinhoPage();
+        carrinho_page.adcProdutosCarrinho();
+        carrinho_page.acessoCarrinho()
+        carrinho_page.adcNovoProduto()
 
         time.sleep(5);

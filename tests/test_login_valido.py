@@ -2,22 +2,18 @@ import time
 from selenium.webdriver.common.by import By
 import pytest
 import conftest
+from pages.login_page import LoginPage
 
 @pytest.mark.usefixtures("setup_teardown")
 
 class Test_Login:
-    def login_valido(self):
+    def test_login_valido(self, setup_teardown):
         browser = conftest.browser;
-        username = browser.find_element(By.XPATH, "//*[@id='user-name']");
-        username.send_keys("standard_user");
+        login_page = LoginPage();
 
-        password = browser.find_element(By.XPATH, "//*[@id= 'password']");
-        password.send_keys("secret_sauce");
+        login_page.fazer_login("standard_user", "secret_sauce");
 
-        btn_login = browser.find_element(By.XPATH, "//*[@id= 'login-button']");
-        btn_login.click();
-
-        products_title = browser.find_element(By.XPATH, "//span[@class='title']")
+        products_title = browser.find_element(By.XPATH, "//span[@class='title']");
         assert products_title.is_displayed();
 
         time.sleep(5);

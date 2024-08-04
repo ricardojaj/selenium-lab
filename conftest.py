@@ -4,7 +4,7 @@ from selenium import webdriver
 browser: webdriver.Remote;
 
 @pytest.fixture
-def setup_teardown():
+def setup_teardown(scope="session"):
     # setup
     global browser
     browser = webdriver.Chrome();
@@ -13,7 +13,9 @@ def setup_teardown():
     browser.maximize_window();
 
     #run test
-    yield
+    yield browser
 
     #teardown
     browser.quit()
+
+
