@@ -3,21 +3,20 @@ from selenium.webdriver.common.by import By
 import conftest
 import pytest
 
+from pages.home_page import HomePage
+from pages.login_page import LoginPage
+
+
 @pytest.mark.usefixtures("setup_teardown")
 class Test_login_invalido:
-    def test_login_senha_invalida(self):
+    def test_login_senha_invalida(self, setup_teardown):
         browser = conftest.browser;
-        username = browser.find_element(By.XPATH, "//*[@id='user-name']");
-        username.send_keys("standard_user");
+        login_page = LoginPage();
+        home_page = HomePage();
 
-        password = browser.find_element(By.XPATH, "//*[@id= 'password']");
-        password.send_keys("senhaInvalida");
+        #user e senha invalida
+        login_page.fazer_login("standard_use", "secret_sau");
 
-        btn_login = browser.find_element(By.XPATH, "//*[@id= 'login-button']");
-        btn_login.click();
+        home_page.verificar_login_invalido()
 
-        msgSenhaInvalida = browser.find_element(By.XPATH, "//h3[@data-test='error']")
-        assert msgSenhaInvalida.text == 'Epic sadface: Username and password do not match any user in this service';
-
-        print(msgSenhaInvalida.text);
         time.sleep(5);

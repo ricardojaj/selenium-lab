@@ -2,40 +2,34 @@ import time
 from selenium.webdriver.common.by import By
 import conftest
 import pytest
+
+from pages.carrinho_page import CarrinhoPage
+from pages.fechar_pedido import FecharPedido
+from pages.login_page import LoginPage
+
+
 @pytest.mark.usefixtures("setup_teardown")
 class Test_realizar_compra:
-    def test_finalizando_compra(self):
+    def test_finalizando_compra(self, setup_teardown):
         browser = conftest.browser;
-        username = browser.find_element(By.XPATH, "//*[@id='user-name']");
-        username.send_keys("standard_user");
+        login_page = LoginPage();
+        fechar_pedido = FecharPedido();
 
-        password = browser.find_element(By.XPATH, "//*[@id= 'password']");
-        password.send_keys("secret_sauce");
+        login_page.fazer_login("standard_user", "secret_sauce");
 
-        btn_login = browser.find_element(By.XPATH, "//*[@id= 'login-button']");
-        btn_login.click();
+        carrinho_page = CarrinhoPage();
+        carrinho_page.adcProdutosCarrinho();
 
-        #adc produto
-        browser.find_element(By.XPATH, "//*[@id= 'add-to-cart-sauce-labs-onesie']").click();
-
-        #Acessando Carrinho
-        browser.find_element(By.XPATH, "//*[@class = 'shopping_cart_link']").click();
+        carrinho_page.acessoCarrinho()
+        carrinho_page.adcNovoProduto()
 
         #Click checkout button
-        browser.find_element(By.ID, "checkout").click();
+        fechar_pedido.acessarTelaChecout();
 
         #Preenchendo informaçoes
-        firstName = browser.find_element(By.XPATH, "//*[@id = 'first-name']");
-        firstName.send_keys("Mariana");
+        fechar_pedido.formularioDeCompra("Mariana", "Santos", "11111111")
 
-        lastName = browser.find_element(By.XPATH, "//*[@id = 'last-name']");
-        lastName.send_keys("Santos");
-
-        postalCode = browser.find_element(By.XPATH, "//*[@id = 'postal-code']");
-        postalCode.send_keys("13478580");
-        time.sleep(3)
-        browser.find_element(By.XPATH, "//*[@id = 'continue']").click();
 
         #finalizando compra
-        browser.find_element(By.XPATH, "//*[@id = 'finish']").click();
+        fechar_pedido.finalizarCompra()
         time.sleep(3)
