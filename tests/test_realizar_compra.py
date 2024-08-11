@@ -4,7 +4,7 @@ import conftest
 import pytest
 
 from pages.carrinho_page import CarrinhoPage
-from pages.fechar_pedido import FecharPedido
+from pages.fechar_pedido_page import FecharPedido
 from pages.login_page import LoginPage
 
 
