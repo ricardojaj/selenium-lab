@@ -7,6 +7,8 @@ from pages.carrinho_page import CarrinhoPage
 
 
 @pytest.mark.usefixtures("setup_teardown")
+@pytest.mark.carrinho
+@pytest.mark.smoke
 class Test_adc_produtos:
 
     def test_adc_produtos_carrinho(self):
