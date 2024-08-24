@@ -12,13 +12,13 @@ from pages.carrinho_page import CarrinhoPage
 class Test_adc_produtos:
 
     def test_adc_produtos_carrinho(self):
-        browser = conftest.browser;
-        login_page = LoginPage();
-        login_page.fazer_login("standard_user", "secret_sauce");
+        browser = conftest.browser
+        login_page = LoginPage()
+        login_page.fazer_login("standard_user", "secret_sauce")
 
-        carrinho_page = CarrinhoPage();
-        carrinho_page.adcProdutosCarrinho();
+        carrinho_page = CarrinhoPage()
+        carrinho_page.adcProdutosCarrinho()
         carrinho_page.acessoCarrinho()
         carrinho_page.adcNovoProduto()
 
-        time.sleep(5);
+        time.sleep(5)
